@@ -1,14 +1,20 @@
+ID: 341953163, Username: Usuario sin username
 ID: 1075825412, Username: Usuario sin username
 ID: 1239738743, Username: Usuario sin username
 ID: 1561301024, Username: Midoriya_Sensei
 ID: 2072195751, Username: Cyber_Link_03
+ID: 5075142324, Username: Elvis_G150
 ID: 5267984887, Username: Jackerkos
+ID: 5647815794, Username: Usuario sin username
 ID: 5902449484, Username: RyoCraneL
 ID: 6571839773, Username: CxSfrvr120823
 ID: 6842618087, Username: Usuario sin username
 ID: 6986515466, Username: Usuario sin username
 ID: 7122082332, Username: Usuario sin username
-ID: 7309726245, Username: kawaranadarevenge
 ID: 7601667690, Username: Usuario sin username
 ID: 7716081554, Username: Usuario sin username
+ID: 7758421722, Username: Usuario sin username
+ID: 7885323795, Username: Usuario sin username
+ID: 8080891398, Username: Usuario sin username
+ID: 8469913688, Username: Usuario sin username
 ID: NaN, Username: Usuario sin username

@@ -67,6 +67,21 @@ dbConnection.on('error', (err) => {
 
 //const {GDLink} = require("nayan-media-downloader");
 
+async function checkCAS(userId) {
+    try {
+        const response = await axios.get(`https://api.cas.chat/check?user_id=${userId}`);
+
+        if (response.data.ok) {
+            return response.data.result;
+        }
+
+        return false;
+
+    } catch (err) {
+        console.error(err);
+        return false;
+    }
+}
 
 
 var app = express();
@@ -81,8 +96,8 @@ app
 
 /*   const cheerio = require('cheerio'); */
 
-/*BETA = 1989987277:AAF8-Kmb1pfNyXersBniOciDDxDjjJPPzXk*/////////////////////////
-/*ORIGINAL = 1785797976:AAG0JqUc1IJhK6i7wCyYxx0swR7vWI2QX00*/ 
+/*BETA = 8837235339:AAEfG4pb-CUPwbggn10rc8h7wjP6sm4YmBU*/////////////////////////
+/*ORIGINAL = 1785797976:AAGsgdYFItM4G4IAaF5UdSYKopTuJhZrILA*/ 
 const bot = new TelegramBot("1785797976:AAGsgdYFItM4G4IAaF5UdSYKopTuJhZrILA", {
   polling: true,
 });
@@ -542,6 +557,42 @@ bot.onText(/\/myfish/, async (msg) => {
 });  */
 /////////////////
 // Comando /loteriaa
+/* bot.onText(/\/cas(?: (.+))?/, async (msg, match) => {
+
+    const chatId = msg.chat.id;
+
+    let userId;
+
+    // Si responde a alguien
+    if (msg.reply_to_message) {
+        userId = msg.reply_to_message.from.id;
+    }
+
+    // Si escribe ID manual
+    else if (match[1]) {
+        userId = match[1];
+    }
+
+    else {
+        return bot.sendMessage(chatId,
+            'Uso:\n/cas ID\nO responde a un usuario con /cas');
+    }
+
+    const result = await checkCAS(userId);
+
+    if (!result) {
+        return bot.sendMessage(chatId,
+            `✅ Usuario ${userId} NO está en CAS`);
+    }
+
+    bot.sendMessage(chatId,
+`🚫 Usuario encontrado en CAS
+
+👤 ID: ${result.user.id}
+📛 Motivo: ${result.offenses}
+🔗 https://cas.chat/query?u=${result.user.id}`);
+}); */
+
 bot.onText(/\/loteria(?:\s+(\d+))?/, async (msg, match) => {
   const chatId = msg.chat.id;
   const userId = msg.from.id.toString();
@@ -631,7 +682,282 @@ bot.onText(/\/top/, async (msg) => {
   bot.sendMessage(chatId, topUsersMessage, {parse_mode: "HTML"});
 })
  
+bot.onText(/\/hack/, async (msg) => {
 
+    const chatId = msg.chat.id;
+
+    // Usuario objetivo
+    const target = msg.reply_to_message
+        ? msg.reply_to_message.from
+        : msg.from;
+
+    const name = target.first_name;
+    const username = target.username
+        ? '@' + target.username
+        : 'Sin username';
+
+    const id = target.id;
+
+    // =========================
+    // DATOS RANDOM
+    // =========================
+
+    const fakePasswords = [
+        '123456',
+        'teamo123',
+        'freefire2026',
+        'admin123',
+        'pikachu69',
+        'gokuxxx',
+        'soyunfurro',
+        'ilovepizza',
+        'nose123',
+        'qwerty'
+    ];
+
+    const cringeSearches = [
+        'cómo besar',
+        'free robux real',
+        'cómo hablar con mujeres',
+        'cómo dejar de dar cringe',
+        'gatos bailando',
+        'por qué me ignoran',
+        'among us twerk',
+        'memes 2017',
+        'cómo ser sigma'
+    ];
+
+    const weirdFiles = [
+        'patas.zip',
+        'memes_rancios.rar',
+        'tareas_nunca_hechas.pdf',
+        'foto_sin_filtro.png',
+        'furro_detectado.exe',
+        'momos_2021.mp4'
+    ];
+
+    const crimes = [
+        'robo de empanadas',
+        'tráfico de momos',
+        'venta ilegal de chocorroles',
+        'posesión de memes rancios',
+        'fraude en free fire',
+        'abuso de stickers cursed'
+    ];
+
+    const levels = [
+        '0%',
+        '17%',
+        '34%',
+        '58%',
+        '79%',
+        '1000%'
+    ];
+
+    const password =
+        random(fakePasswords);
+
+    const search =
+        random(cringeSearches);
+
+    const file =
+        random(weirdFiles);
+
+    const crime =
+        random(crimes);
+
+    const cringeLevel =
+        random(levels);
+
+    // =========================
+    // MENSAJE INICIAL
+    // =========================
+
+    const sent = await bot.sendMessage(chatId,
+`💻 INICIANDO HACKEO...
+
+█░░░░░░░░░ 1%`);
+
+    async function edit(text) {
+
+        try {
+
+            await bot.editMessageText(text, {
+                chat_id: chatId,
+                message_id: sent.message_id
+            });
+
+        } catch (e) {}
+    }
+
+    // =========================
+    // FASE 1
+    // =========================
+
+    await wait(1400);
+
+    await edit(
+`💻 HACKEANDO A ${name}
+
+██░░░░░░░░ 12%
+
+📡 Encontrando ubicación...
+🌍 IP: 192.168.${rand(1,255)}.${rand(1,255)}
+
+📱 Marca del teléfono:
+${random([
+'iPhone del Oxxo',
+'Nokia nuclear',
+'Samsung explotado',
+'Xiaomi pirateado',
+'Motorola del 2014'
+])}`
+    );
+
+    // =========================
+    // FASE 2
+    // =========================
+
+    await wait(1600);
+
+    await edit(
+`💻 HACKEANDO A ${name}
+
+████░░░░░░ 28%
+
+🔐 Descifrando contraseña...
+
+✅ Contraseña encontrada:
+${password}
+
+💀 Seguridad:
+muy lamentable`
+    );
+
+    // =========================
+    // FASE 3
+    // =========================
+
+    await wait(1600);
+
+    await edit(
+`💻 HACKEANDO A ${name}
+
+██████░░░░ 51%
+
+📂 Archivos encontrados:
+
+├ ${file}
+├ memes_cringe.mp4
+├ tarea_copiada.docx
+└ whatsapp_de_la_ex.pdf
+
+📸 Fotos raras detectadas:
+${rand(4,70)}`
+    );
+
+    // =========================
+    // FASE 4
+    // =========================
+
+    await wait(1600);
+
+    await edit(
+`💻 HACKEANDO A ${name}
+
+████████░░ 76%
+
+🔎 Historial encontrado:
+
+• ${search}
+• cómo dejar de procrastinar
+• free diamonds apk
+• por qué mi gato me odia
+
+🤡 Nivel de cringe:
+${cringeLevel}`
+    );
+
+    // =========================
+    // FASE 5
+    // =========================
+
+    await wait(1700);
+
+    await edit(
+`💻 HACKEANDO A ${name}
+
+█████████░ 92%
+
+🚨 ACTIVIDAD ILEGAL DETECTADA
+
+⚠️ Delito encontrado:
+${crime}
+
+📨 Contactando al FBI...
+🛰 NSA conectada...
+🐟 CAS confundido...
+🤖 Skynet activado...`
+    );
+
+    // =========================
+    // FINAL
+    // =========================
+
+    await wait(2200);
+
+    await edit(
+`☠️ HACKEO COMPLETADO ☠️
+
+👤 Nombre: ${name}
+🆔 ID: ${id}
+🌐 Username: ${username}
+
+🔑 Contraseña filtrada:
+${password}
+
+📂 Archivo principal:
+${file}
+
+🤡 Nivel de cringe:
+${cringeLevel}
+
+🚔 Delito:
+${crime}
+
+💸 Cuenta vendida en la dark web por:
+$${rand(10,9999)}
+
+⚠️ Tu mamá ha sido notificada`
+    );
+
+});
+
+
+// =========================
+// HELPERS
+// =========================
+
+function wait(ms) {
+
+    return new Promise(resolve =>
+        setTimeout(resolve, ms)
+    );
+}
+
+function rand(min, max) {
+
+    return Math.floor(
+        Math.random() * (max - min + 1)
+    ) + min;
+}
+
+function random(arr) {
+
+    return arr[
+        Math.floor(Math.random() * arr.length)
+    ];
+}
 
 
 /* bot.onText(/\/ban (.+)/, (msg, match) => {
@@ -2716,7 +3042,7 @@ bot.on("callback_query", function onCallbackQuery(callbackQuery) {
   }
   if (action === "8") {
     text =
-      "Otros comandos de ocio extras: \n\n/calendario: Consulta la fecha actual. \n\n/random: El bot elige aleatoriamente una respuesta para tí; ejemplo: /random Minecraft, Clash Royale, Call of duty. (Se debe separar por comas las opciones). \n\n/loteria <1 al 25>: Diviertete jugando a la lotería y sal en el top (/top) global de usuarios con más puntos.\n\n/fish: ¡Atrapa peces! consulta tu colección con /myfish.\n\n/qtcompatibles: Responde al mensaje de un usuario para conocer que probabilidades hay tener éxito como pareja. \n\n/basta: Responde acertijos y divertete pensando la respuesta.\n\n/kiss, /besar: Entregale un beso a un usuario haciendo reply a uno de sus mensajes. \n\n/hug, /abrazar: Responde un mensaje en el chat para darle un tierno abrazo. \n\n/golpear, /kill: Al hacer respuesta de un mensaje en el chat, el bot responde con esta emoción. \n\n/spank, /nalguear: Entrega una nalgadita al usuario en respuesta de uno de sus mensaje en el grupito. \n\n/pat, /cariciar: Responde a un mensaje para dar una tierna caricia.";
+      "Otros comandos de ocio extras: \n\n/shiprandom: Haz match de dos usuarios del grupo.\n\n/hack: ¡Sorpresa!.\n\n/detectar: ¡Sorpresa!.\n\n/Casino: Juega al casino.\n\n/calendario: Consulta la fecha actual. \n\n/random: El bot elige aleatoriamente una respuesta para tí; ejemplo: /random Minecraft, Clash Royale, Call of duty. (Se debe separar por comas las opciones). \n\n/loteria <1 al 25>: Diviertete jugando a la lotería y sal en el top (/top) global de usuarios con más puntos.\n\n/fish: ¡Atrapa peces! consulta tu colección con /myfish.\n\n/qtcompatibles: Responde al mensaje de un usuario para conocer que probabilidades hay tener éxito como pareja. \n\n/basta: Responde acertijos y divertete pensando la respuesta.\n\n/kiss, /besar: Entregale un beso a un usuario haciendo reply a uno de sus mensajes. \n\n/hug, /abrazar: Responde un mensaje en el chat para darle un tierno abrazo. \n\n/golpear, /kill: Al hacer respuesta de un mensaje en el chat, el bot responde con esta emoción. \n\n/spank, /nalguear: Entrega una nalgadita al usuario en respuesta de uno de sus mensaje en el grupito. \n\n/pat, /cariciar: Responde a un mensaje para dar una tierna caricia.";
   }
 
   if (action === "10") {
@@ -10829,3 +11155,521 @@ bot.on('new_chat_members', (msg) => {
 
 // Inicia el bot
 console.log('Bot iniciado. Escuchando comandos...');
+
+const slots = [
+    '🍕',
+    '💀',
+    '🐟',
+    '💎',
+    '🦆',
+    '🔥',
+    '🧻'
+];
+
+bot.onText(/\/casino/, (msg) => {
+
+    const a = random(slots);
+    const b = random(slots);
+    const c = random(slots);
+
+    let text =
+`${a} | ${b} | ${c}\n\n`;
+
+    if (a === b && b === c) {
+
+        text += '💰 JACKPOT';
+
+    } else {
+
+        text += '💀 Perdiste';
+    }
+
+    bot.sendMessage(msg.chat.id, text);
+
+});
+
+function random(arr) {
+
+    return arr[
+        Math.floor(Math.random() * arr.length)
+    ];
+}
+
+bot.onText(/\/detectar/, async (msg) => {
+
+    const chatId = msg.chat.id;
+
+    // Usuario objetivo
+    const target = msg.reply_to_message
+        ? msg.reply_to_message.from
+        : msg.from;
+
+    const name = target.first_name;
+
+    // Opciones random
+    const detects = [
+
+        '🐺 Furro detectado',
+        '🤓 Otaku nivel dios',
+        '🎮 Gamer tóxico',
+        '🧠 NPC avanzado',
+        '🤡 Comediante malo',
+        '🍕 Devorador de pizza',
+        '💀 Generador de cringe',
+        '🦆 Pato infiltrado',
+        '📡 Espía del FBI',
+        '👴 Señor de los momos',
+        '🐟 Pez sospechoso',
+        '🪨 Piedra con WiFi',
+        '🧻 Ladrón de papel higiénico',
+        '☢️ Fuente de radiación',
+        '👽 Alien disfrazado',
+        '🛰 Satélite humano',
+        '🔥 Consumidor de memes rancios',
+        '🐀 Rata táctica',
+        '💤 NPC AFK',
+        '🍔 Fan de hamburguesas vencidas',
+        '🚨 Admin infiltrado',
+        '📱 TikToker en rehabilitación',
+        '🦍 Simio premium',
+        '🥔 Papa evolucionada',
+        '🧃 Adicto al juguito'
+    ];
+
+    const result = random(detects);
+
+    // Mensaje inicial
+    const sent = await bot.sendMessage(chatId,
+`🛰 ESCANEO INICIADO...
+
+█░░░░░░░░░ 1%`);
+
+    // Helper editar
+    async function edit(text) {
+
+        try {
+
+            await bot.editMessageText(text, {
+                chat_id: chatId,
+                message_id: sent.message_id
+            });
+
+        } catch (e) {}
+    }
+
+    // =========================
+    // FASES
+    // =========================
+
+    await wait(1300);
+
+    await edit(
+`🛰 ESCANEANDO A ${name}
+
+██░░░░░░░░ 12%
+
+🔍 Analizando cerebro...
+🧠 Neuronas encontradas:
+${rand(0, 3)}`
+    );
+
+    await wait(1400);
+
+    await edit(
+`🛰 ESCANEANDO A ${name}
+
+████░░░░░░ 29%
+
+📂 Revisando historial...
+
+• free robux 2026
+• cómo dejar de dar cringe
+• memes 2017`
+    );
+
+    await wait(1500);
+
+    await edit(
+`🛰 ESCANEANDO A ${name}
+
+██████░░░░ 47%
+
+📡 Detectando actividad sospechosa...
+
+⚠️ Nivel de olor:
+${rand(10, 100)}%
+
+🤡 Cringe:
+${rand(40, 999)}%`
+    );
+
+    await wait(1500);
+
+    await edit(
+`🛰 ESCANEANDO A ${name}
+
+████████░░ 73%
+
+🔎 Buscando secretos...
+
+📸 Fotos cursed:
+${rand(4, 87)}
+
+🍕 Pizzas consumidas:
+${rand(20, 999)}
+
+💀 Dignidad restante:
+${rand(0, 12)}%`
+    );
+
+    await wait(1700);
+
+    await edit(
+`🛰 ESCANEANDO A ${name}
+
+█████████░ 92%
+
+☢️ Analizando ADN...
+
+🐟 Compatibilidad con peces:
+${rand(1,100)}%
+
+🚨 Actividad ilegal detectada`
+    );
+
+    await wait(2200);
+
+    // =========================
+    // FINAL
+    // =========================
+
+    await edit(
+`✅ ESCANEO COMPLETADO
+
+👤 Usuario:
+${name}
+
+🆔 ID:
+${target.id}
+
+📡 Resultado:
+
+${result}
+
+🧠 IQ detectado:
+${rand(0, 200)}
+
+🤡 Cringe:
+${rand(70, 999)}%
+
+👃 Nivel de olor:
+${rand(1,100)}%
+
+🚔 Estado legal:
+muy cuestionable
+
+☠️ Recomendación:
+bañarse urgentemente`
+    );
+
+});
+
+
+// =========================
+// HELPERS
+// =========================
+
+function wait(ms) {
+
+    return new Promise(resolve =>
+        setTimeout(resolve, ms)
+    );
+}
+
+function rand(min, max) {
+
+    return Math.floor(
+        Math.random() * (max - min + 1)
+    ) + min;
+}
+
+function random(arr) {
+
+    return arr[
+        Math.floor(Math.random() * arr.length)
+    ];
+}
+
+////////////////////////////////////
+
+const groupUsers = new Map();
+
+
+// ========================================
+// GUARDAR USUARIOS Y BOTS
+// ========================================
+
+bot.on('message', (msg) => {
+
+    if (
+        msg.chat.type !== 'group' &&
+        msg.chat.type !== 'supergroup'
+    ) return;
+
+    if (!msg.from)
+        return;
+
+    const chatId = msg.chat.id;
+
+    // Crear mapa
+    if (!groupUsers.has(chatId)) {
+
+        groupUsers.set(chatId, new Map());
+    }
+
+    // Guardar usuario o bot
+    groupUsers
+        .get(chatId)
+        .set(msg.from.id, {
+
+            id: msg.from.id,
+            name: msg.from.first_name,
+            isBot: msg.from.bot
+
+        });
+
+});
+
+
+// ========================================
+// /shiprandom
+// ========================================
+
+bot.onText(/\/shiprandom/, async (msg) => {
+
+    const chatId = msg.chat.id;
+
+    // Solo grupos
+    if (
+        msg.chat.type !== 'group' &&
+        msg.chat.type !== 'supergroup'
+    ) {
+
+        return bot.sendMessage(chatId,
+            '❌ Solo funciona en grupos');
+    }
+
+    let users = [];
+
+    // ====================================
+    // USUARIOS GUARDADOS
+    // ====================================
+
+    const usersMap =
+        groupUsers.get(chatId);
+
+    if (usersMap) {
+
+        users =
+            Array.from(usersMap.values());
+    }
+
+    // ====================================
+    // FALLBACK ADMINS
+    // ====================================
+
+    if (users.length < 2) {
+
+        try {
+
+            const admins =
+                await bot.getChatAdministrators(chatId);
+
+            users = admins.map(a => ({
+
+                id: a.user.id,
+                name: a.user.first_name,
+                isBot: a.user.bot
+
+            }));
+
+        } catch (e) {
+
+            console.log(e);
+        }
+    }
+
+    // ====================================
+    // VALIDAR
+    // ====================================
+
+    if (users.length < 2) {
+
+        return bot.sendMessage(chatId,
+`❌ No hay suficientes usuarios
+
+💡 Haz que algunos hablen primero`);
+    }
+
+    // ====================================
+    // RANDOM USERS
+    // ====================================
+
+    const user1 =
+        random(users);
+
+    let user2 =
+        random(users);
+
+    while (user1.id === user2.id) {
+
+        user2 =
+            random(users);
+    }
+
+    // ====================================
+    // DATOS RANDOM
+    // ====================================
+
+    const percent =
+        rand(1, 100);
+
+    const comments = [
+
+        '💍 Boda mañana',
+        '🔥 Tremenda química',
+        '💀 Relación extremadamente tóxica',
+        '🍕 Comparten la misma neurona',
+        '🤡 Pareja certificada',
+        '💘 Amor verdadero',
+        '☠️ Durarán 3 días',
+        '🐟 El pez aprueba esta unión',
+        '🚨 Mucho cringe detectado',
+        '🧠 Compatibilidad cerebral',
+        '🤖 Romance robótico',
+        '💻 Pareja virtual perfecta',
+        '☢️ Unión peligrosa'
+    ];
+
+    // ====================================
+    // CORAZONES
+    // ====================================
+
+    let heart = '💔';
+
+    if (percent > 30)
+        heart = '❤️';
+
+    if (percent > 70)
+        heart = '💖';
+
+    if (percent > 90)
+        heart = '💞';
+
+    // Bots especiales
+    if (user1.isBot || user2.isBot) {
+
+        heart = '🤖';
+    }
+
+    // ====================================
+    // ANIMACIÓN
+    // ====================================
+
+    const sent =
+        await bot.sendMessage(chatId,
+`💘 BUSCANDO PAREJA...
+
+█░░░░░░░░░ 1%`);
+
+    async function edit(text) {
+
+        try {
+
+            await bot.editMessageText(text, {
+
+                chat_id: chatId,
+                message_id: sent.message_id
+
+            });
+
+        } catch (e) {}
+    }
+
+    await wait(1400);
+
+    await edit(
+`💘 ANALIZANDO COMPATIBILIDAD...
+
+████░░░░░░ 29%
+
+👤 ${user1.name}
+${heart}
+👤 ${user2.name}`
+    );
+
+    await wait(1700);
+
+    await edit(
+`💘 ANALIZANDO ADN...
+
+███████░░░ 61%
+
+🧠 Compatibilidad cerebral:
+${rand(1,100)}%
+
+🍕 Compatibilidad culinaria:
+${rand(1,100)}%
+
+🤡 Nivel de cringe:
+${rand(1,999)}%`
+    );
+
+    await wait(2000);
+
+    // ====================================
+    // RESULTADO FINAL
+    // ====================================
+
+    await edit(
+`💘 SHIP ENCONTRADO 💘
+
+${heart} ${user1.name} + ${user2.name} ${heart}
+
+❤️ Compatibilidad: ${percent}%
+
+${random(comments)}
+
+👶 Hijos estimados: ${rand(0,14)}
+
+💀 Probabilidad de divorcio:
+${rand(1,100)}%`
+    );
+
+});
+
+
+// ========================================
+// HELPERS
+// ========================================
+
+function random(arr) {
+
+    return arr[
+        Math.floor(Math.random() * arr.length)
+    ];
+}
+
+function rand(min, max) {
+
+    return Math.floor(
+        Math.random() * (max - min + 1)
+    ) + min;
+}
+
+function wait(ms) {
+
+    return new Promise(resolve =>
+        setTimeout(resolve, ms)
+    );
+}
